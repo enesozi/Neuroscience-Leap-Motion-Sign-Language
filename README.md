@@ -1,5 +1,5 @@
 # Neuroscience-Leap-Motion-Sign-Language
-In this repository, we aim to predict sing language gestures.
+In this repository, we aim to predict sign language gestures.
 
 # Requirements
 	* Operating Systems: Linux, OSX
