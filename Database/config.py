@@ -1,0 +1,10 @@
+UNAME = "utcns_admin"
+PASSWORD = "Rrmaa5ctTtMKtKf"
+DBNAME = "utcns"
+PORT = 25263
+COLLECTION = "train_data"
+# with label
+NUMBER_OF_ATTRIBUTES = 61
+NUM_SAMPLES = 100
+SAMPLE_DELAY = 1
+NUM_FEATURES = 60
