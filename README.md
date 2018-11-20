@@ -7,4 +7,4 @@ In this repository, we aim to predict sign language gestures.
 
 ### Example run:
 
-- Please, simply run *python main.py* and observe outputs on your terminal.
+- Please, simply run *python start_training.py* and start inserting instances into db along with corresponding labels.
