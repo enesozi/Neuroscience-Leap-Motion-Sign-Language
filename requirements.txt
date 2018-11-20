@@ -29,3 +29,4 @@ sqlite=3.25.2=h7b6447c_0
 tk=8.6.8=hbc83047_0
 wheel=0.32.2=py27_0
 zlib=1.2.11=ha838bed_2
+pymongo==3.7.2
