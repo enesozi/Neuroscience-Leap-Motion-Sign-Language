@@ -11,12 +11,11 @@ class DB:
     def get_train_data(self):
         return [instance for instance in self.__train_data_collection.find()]
 
-    def insert_train_data(self, attributes, label='A'):
+    def insert_train_data(self, attributes):
         if len(attributes) != NUMBER_OF_ATTRIBUTES:
             raise ValueError('Expected ' + str(NUMBER_OF_ATTRIBUTES) +
                              ' features, got ' + str(len(attributes)))
 
-        attributes['label'] = label
         print("Inserted with id: ", self.__train_data_collection.insert(attributes))
 
     def truncate_db(self):
