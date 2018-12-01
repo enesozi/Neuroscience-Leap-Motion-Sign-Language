@@ -2,11 +2,10 @@
 <html>
   <head>
     <title>CNS project</title>
-    <link rel="stylesheet" type="text/css" href="/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script>
-      
-    </script>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+    <script src="static/js/application.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 
   </head>
@@ -15,15 +14,15 @@
 
   	<h1>CNS Project - Leap Motion</h1>
     <font>
-      Leap motion connected: True <br>
-      Status: Running...
+      Leap motion connected: <div id="connection"> {{ connection }}</div> <br>
+      Status: <div id="state"> {{ state }}</div> <br>
     </font>
     
     <br>
     <br>
     
     <div> 
-      Recognized gesture: A
+      Recognized gesture: <div id="gesture">{{ gesture }}</div>
     </div>
 
     <br><br><br><br><br><br><br>
