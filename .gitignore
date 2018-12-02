@@ -3,3 +3,4 @@
 /.vscode
 /LeapSDK/docs/*
 *.csv
+.ipynb_checkpoints
