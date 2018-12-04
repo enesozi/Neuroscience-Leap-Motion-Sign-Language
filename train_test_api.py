@@ -11,6 +11,7 @@ class Model(object):
     def __init__(self, model_name='random_forest'):
         self.model_name = model_name
         self.clf = None
+        self.model_file = "models/%s.joblib" % self.model_name
 
     def train(self, train_file='train_data_last.csv'):
         # Read file
@@ -28,10 +29,10 @@ class Model(object):
 
         self.clf.fit(X_train, y_train)
 
-        # Saves models to files
-        dump(self.clf, "models/%s.joblib" % self.model_name)
+        # Saves model to file
+        dump(self.clf, self.model_file)
 
-    def test(self, test_instance):
+    def predict(self, test_instance):
         if self.clf is None:
-            self.clf = load("models/%s.joblib" % self.model_name)
+            self.clf = load(self.model_file)
         return self.clf.predict(test_instance)
