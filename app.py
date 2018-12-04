@@ -15,6 +15,9 @@ connection = "False";
 state = "Not connected";
 gesture= "";
 
+instances = []
+
+
 
 # Main page
 @app.route('/')
@@ -33,6 +36,7 @@ def worker():
     #prediction = model.predict(data)
 
     return "A"
+
 
 
 if __name__ == '__main__':
