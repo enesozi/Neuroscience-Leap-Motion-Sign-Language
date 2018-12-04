@@ -35,4 +35,5 @@ class Model(object):
     def predict(self, test_instance):
         if self.clf is None:
             self.clf = load(self.model_file)
-        return self.clf.predict(test_instance)
+    	features_reordered = [test_instance[key] for key in sorted(test_instance)]
+        return self.clf.predict(features_reordered)
