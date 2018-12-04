@@ -1,4 +1,7 @@
 import Leap
+import train
+from sklearn.externals import joblib
+from sklearn.datasets import load_digits
 import os, sys, inspect, thread, time, platform
 from flask_socketio import SocketIO, emit
 from flask import Flask, render_template, url_for, copy_current_request_context
@@ -15,6 +18,13 @@ thread_stop_event = Event()
 connection = "False"; 
 state = "Not connected";
 gesture= "";
+
+classifier = joblib.load("models/svc.pkl")
+print(type(classifier))
+
+
+#run_controller()
+
 
 
 class UpdateThread(Thread):
@@ -87,8 +97,6 @@ def test_connect():
     # need visibility of the global thread object
     global thread
     print('Client connected')
-
-    run_controller()
 
     #Start the random number generator thread only if the thread has not been started before.
     if not thread.isAlive():
