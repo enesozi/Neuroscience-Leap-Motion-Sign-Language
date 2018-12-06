@@ -40,7 +40,8 @@ def worker():
     data = get_hand_position(controller, blocking=True)
     prediction = Model.predict(data)
     print(prediction)
-    time.sleep(0.5)
+    # without sleep there is no delay, but it stops after a few seconds (see console of browser)
+    #time.sleep(0.5)
     return prediction[0]
 
 if __name__ == '__main__':
