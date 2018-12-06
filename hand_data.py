@@ -32,3 +32,4 @@ def get_hand_position(controller, blocking=False):
                 "attr" + str(i * 3 + j)] = normalized_joint[j]
 
     return calibrated_finger_bones
+

@@ -1,5 +1,6 @@
 from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
+import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.svm import SVC
@@ -38,9 +39,15 @@ class Model(object):
         dump(self.clf, self.model_file)
 
     def predict(self, test_instance):
+        
         if self.clf is None:
             self.clf = load(self.model_file)
-        return self.clf.predict(test_instance)
+        features_reordered = []  
+
+        for key, value in sorted(test_instance.items()):
+            features_reordered.append(value)
+
+        return self.clf.predict([np.array(features_reordered)])
 
 
     def evaluate(self, test_size=0.2, train_file='train_data_last.csv'):
@@ -67,3 +74,5 @@ class Model(object):
         print(confusion_matrix(self.y_test, test_predict))  
 
         return train_time,test_time, accuracy_train, accuracy_test
+        
+       
