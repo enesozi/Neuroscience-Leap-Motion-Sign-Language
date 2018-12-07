@@ -67,7 +67,7 @@ function init() {
                 success: function(msg){
                   if (old_prediction != msg){
                       document.getElementById("output").innerHTML = "Prediction: " + msg;
-                      document.getElementById("image").src = "/static/signs/" + msg + ".gif" 
+                      document.getElementById("image").src = "/static/signs/" + msg.toLowerCase() + ".gif" 
                   }
                 }
             }); 
