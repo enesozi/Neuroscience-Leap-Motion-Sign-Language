@@ -17,13 +17,13 @@ class Model(object):
         self.clf = None
         self.model_file = "models/%s.joblib" % self.model_name
 
-    def train(self, test_size=0.2, train_file='train_data_last.csv'):
+    def train(self, test_size=0.2, train_file='train_data_last.csv', random_state=42):
         # Read file
         data = pd.read_csv(train_file)
 
         # Split test-train
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
-            data.iloc[:, :-1], data.label, test_size=test_size, random_state=42)
+            data.iloc[:, :-1], data.label, test_size=test_size, random_state=random_state)
 
         if self.model_name == 'random_forest':
             self.clf = RandomForestClassifier(
@@ -51,24 +51,19 @@ class Model(object):
     def evaluate(self, test_size=0.2, train_file='train_data_last.csv'):
         # measure time for training
         t0 = time()
-        self.train()
+        self.train(random_state=0)
         print('Test split: {0}', test_size)
         print('Number of training samples {0} Number of test samples {1}'
               .format(len(self.y_train), len(self.y_test)))
         train_time = time() - t0
-        print("train time: {0}s".format(train_time))
+
         # measure time for predicting
         t0 = time()
         test_predict = self.clf.predict(self.X_test)
         test_time = time() - t0
-        print("test time:  {0}s".format(test_time))
         train_predict = self.clf.predict(self.X_train)
-
+        #calculate accuracies
         accuracy_train = accuracy_score(self.y_train, train_predict)
-        print('Accuracy train: {0}'.format(accuracy_train))
         accuracy_test = accuracy_score(self.y_test, test_predict)
-        print('Accuracy test: {0}'.format(accuracy_test))
-        print('Confusion matrix for test data:')
-        print(confusion_matrix(self.y_test, test_predict))
-
-        return train_time, test_time, accuracy_train, accuracy_test
+  
+        return train_time, test_time, accuracy_train, accuracy_test, confusion_matrix(self.y_test, test_predict)
