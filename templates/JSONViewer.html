@@ -19,7 +19,6 @@ var ws;
 var paused = false;
 var focusListener;
 var blurListener;
-var old_prediction = "J";
 
 
 // Support both the WebSocket and MozWebSocket objects
@@ -27,6 +26,7 @@ if ((typeof(WebSocket) == 'undefined') &&
     (typeof(MozWebSocket) != 'undefined')) {
     WebSocket = MozWebSocket;
 }
+
 
 // Create the socket with event handlers
 function init() {
@@ -49,36 +49,6 @@ function init() {
         document.getElementById("connection").innerHTML = "WebSocket connection open!";
     };
 
-    // On message received
-    ws.onmessage = function(event) {
-        if (!paused) {
-
-
-
-            var obj = JSON.parse(event.data);
-            var str = JSON.stringify(obj, undefined, 2);
-
-            $.ajax({
-                type: 'GET',
-                url: '/receiver',
-                data: { 
-                    'foo': 'bar', 
-                },
-                success: function(msg){
-                  if (old_prediction != msg){
-                      document.getElementById("output").innerHTML = "Prediction: " + msg;
-                      document.getElementById("image").src = "/static/signs/" + msg.toLowerCase() + ".gif" 
-                  }
-                }
-            }); 
-
-            if(!obj.hasOwnProperty("timestamp")){
-                console.log(str);
-            } else{
-                document.getElementById("state").innerHTML = "Predicting...";
-            }
-        }
-    };
     
     // On socket close
     ws.onclose = function(event) {
@@ -93,6 +63,9 @@ function init() {
     ws.onerror = function(event) {
       alert("Received error");
     };
+
+    setInterval(updateGif, 500);
+
 }
 
 function togglePause() {
@@ -102,6 +75,22 @@ function togglePause() {
     document.getElementById("pause").innerText = "Resume";
   } else {
     document.getElementById("pause").innerText = "Pause";
+  }
+}
+
+function updateGif() {
+  if (!paused){
+    $.ajax({
+        type: 'GET',
+        url: '/receiver',
+        success: function(msg){
+              document.getElementById("output").innerHTML = "Prediction: " + msg;
+              document.getElementById("image").src = "/static/signs/" + msg.toLowerCase() + ".gif";
+        }
+    }); 
+    document.getElementById("state").innerHTML = "Predicting...";
+  }else{
+        document.getElementById("state").innerHTML = "Paused...";
   }
 }
 
