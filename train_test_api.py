@@ -47,10 +47,10 @@ class Model(object):
 
         return self.clf.predict(features_reordered.reshape(1, -1))
 
-    def evaluate(self, test_size=0.2, train_file='train_data_last.csv'):
+    def evaluate(self, test_size=0.2, train_file='train_data_lastest.csv'):
         # measure time for training
         t0 = time()
-        self.train(random_state=0)
+        self.train()
         print('Test split: {0}', test_size)
         print('Number of training samples {0} Number of test samples {1}'
               .format(len(self.y_train), len(self.y_test)))
@@ -65,7 +65,5 @@ class Model(object):
         accuracy_train = accuracy_score(self.y_train, train_predict)
         accuracy_test = accuracy_score(self.y_test, test_predict)
         print('Accuracy test: {0}'.format(accuracy_test))
-        print('Confusion matrix for test data:')
-        print(confusion_matrix(self.y_test, test_predict))
 
-        return train_time, test_time, accuracy_train, accuracy_test
+        return train_time, test_time, accuracy_train, accuracy_test, confusion_matrix(self.y_test, test_predict)
