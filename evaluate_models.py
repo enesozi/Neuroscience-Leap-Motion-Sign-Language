@@ -9,6 +9,8 @@ def plot_conf_matrix(conf_matrix, accuracy):
     print(model.model_name)
     df_cm = pd.DataFrame(conf_matrix, index = [i for i in "ABCDEF"],
                   columns = [i for i in "ABCDEF"])
+    for i in "ABCDEF":
+        print(i,float(df_cm[i][i])/float( sum(df_cm[i])))
     plt.figure(figsize = (10,7))
     plt.title('Model: '+model.model_name + ' Accuracy: '+ str(accuracy))
     sn.set(font_scale=1.4)#for label size
@@ -18,7 +20,7 @@ def plot_conf_matrix(conf_matrix, accuracy):
 
 
 print('Start evaluation')
-model_names = ['knn','random_forest','svc']
+model_names = ['knn','random_forest','svm']
 for name in model_names:
     print('----------------------------------')
     print('Model name: {0}'.format( name))

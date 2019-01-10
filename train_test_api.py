@@ -29,11 +29,11 @@ class Model(object):
 
         if self.model_name == 'random_forest':
             self.clf = RandomForestClassifier(
-                n_estimators=15, max_depth=3, random_state=0)
+                n_estimators=20, max_depth=6, random_state=0)
         elif (self.model_name == 'knn'):
             self.clf = KNeighborsClassifier()
         else:
-            self.clf = SVC(gamma='auto')
+            self.clf = SVC(kernel = 'poly',gamma='auto')
 
         self.clf.fit(self.X_train, self.y_train)
 
