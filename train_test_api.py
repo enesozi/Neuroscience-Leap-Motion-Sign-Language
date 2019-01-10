@@ -12,18 +12,20 @@ from time import time
 
 class Model(object):
 
-    def __init__(self, model_name='random_forest'):
+    def __init__(self, model_name='random_forest', mode=0):
         self.model_name = model_name
+        self.model_file = "modelsv2/%s.joblib" % self.model_name
         self.clf = None
-        self.model_file = "models/%s.joblib" % self.model_name
+        if mode == 1:
+            self.clf = load(self.model_file)
 
-    def train(self, test_size=0.2, train_file='train_data_last.csv', random_state=42):
+    def train(self, test_size=.2, train_file='train_data_latest.csv'):
         # Read file
         data = pd.read_csv(train_file)
 
         # Split test-train
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
-            data.iloc[:, :-1], data.label, test_size=test_size, random_state=random_state)
+            data.iloc[:, :-1], data.label, stratify=data.label, test_size=test_size, random_state=42)
 
         if self.model_name == 'random_forest':
             self.clf = RandomForestClassifier(
@@ -39,9 +41,6 @@ class Model(object):
         dump(self.clf, self.model_file)
 
     def predict(self, test_instance):
-
-        if self.clf is None:
-            self.clf = load(self.model_file)
 
         features_reordered = np.array([test_instance[key]
                                        for key in sorted(test_instance)])
@@ -65,5 +64,8 @@ class Model(object):
         #calculate accuracies
         accuracy_train = accuracy_score(self.y_train, train_predict)
         accuracy_test = accuracy_score(self.y_test, test_predict)
-  
-        return train_time, test_time, accuracy_train, accuracy_test, confusion_matrix(self.y_test, test_predict)
+        print('Accuracy test: {0}'.format(accuracy_test))
+        print('Confusion matrix for test data:')
+        print(confusion_matrix(self.y_test, test_predict))
+
+        return train_time, test_time, accuracy_train, accuracy_test
