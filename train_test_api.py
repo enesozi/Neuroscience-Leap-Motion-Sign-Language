@@ -33,7 +33,8 @@ class Model(object):
         elif (self.model_name == 'knn'):
             self.clf = KNeighborsClassifier()
         else:
-            self.clf = SVC(kernel = 'poly',gamma='auto')
+            self.clf = SVC(kernel = 'poly',gamma=0.00001 )
+           
 
         self.clf.fit(self.X_train, self.y_train)
 
